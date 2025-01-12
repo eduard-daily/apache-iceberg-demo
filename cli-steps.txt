@@ -1,0 +1,5 @@
+docker exec minio mc alias set myminio http://127.0.0.1:9000 admin rootroot
+docker exec minio mc mb --with-lock myminio/nyc-taxi-data
+docker exec minio ls /opt/test_data/yellow_tripdata_2015-01.csv
+docker exec minio mc cp /opt/test_data/yellow_tripdata_2015-01.csv myminio/nyc-taxi-data/
+docker exec minio mc ls myminio/nyc-taxi-data/
