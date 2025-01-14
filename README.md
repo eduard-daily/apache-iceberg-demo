@@ -213,6 +213,6 @@ Presto :
 ## Results analysis
 To conclude, during this exersice we conducted a comparison in query execution time and resourses usage between 2 search engines: DuckDBand Presto. In given conditions the DuckDB queries performed quickier and typically cost less resources. However, that does not mean, that Presto engine will always provide slower results, then DuckDB.
 We can compare the resource usage results during the test in Grafana dashboard. Generally, the DuckDB container used less resources, then the Presto.
-![](https://github.com/eduard-daily/apache-iceberg-demo/blob/main/duckdb_and_presto_comparison.png)
+![](https://github.com/eduard-daily/apache-iceberg-demo/blob/main/ducldb_and_presto.png)
 Generally we confirmed, that DuckDB excels at single-node, local analytics on small to medium datasets, offering low latency and simplicity. Presto is suitable for distributed querying of large-scale datasets across multiple sources, with scalability but higher. 
 At the end, we can choose DuckDB for speed and Presto for scale and multi-source querying.
