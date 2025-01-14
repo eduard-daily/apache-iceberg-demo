@@ -1,6 +1,6 @@
 ## Apache Iceberg demo(with DuckDB and Presto)
 This demo project introduces an exercise with Apache Iceberg and query engines like DuckDB and Presto. The task will be divided into 4 steps:
-1. Loading the 2GB .csv dataset with NYC taxi rides data from. Transforming the .csv dataset into Apache Iceberg compatible parquet format with a simple PySpark ETL script. The script will also put the transformed parquet data into the Minio bucket storage.
+1. Loading the 2GB .csv dataset with NYC taxi rides data from [kaggle]([url](https://www.kaggle.com/datasets/elemento/nyc-yellow-taxi-trip-data)). Transforming the .csv dataset into Apache Iceberg compatible parquet format with a simple PySpark ETL script. The script will also put the transformed parquet data into the Minio bucket storage.
 2. Deploying the 2 query engines: DuckDB and Presto(we will use docker environment). The query engines will be configured to work with Apache Iceberg table and Iceberg catalog(we will use file-based catalog for demo purposes).
 3. Querying the same queries from both engines and comparing the execution results.
 4. Analysis and observations on the performance differences between 2 engines(DuckDB and Presto).
@@ -212,7 +212,11 @@ Presto :
 
 ## Results analysis
 To conclude, during this exersice we conducted a comparison in query execution time and resourses usage between 2 search engines: DuckDBand Presto. In given conditions the DuckDB queries performed quickier and typically cost less resources. However, that does not mean, that Presto engine will always provide slower results, then DuckDB.
+
 We can compare the resource usage results during the test in Grafana dashboard. Generally, the DuckDB container used less resources, then the Presto.
 ![](https://github.com/eduard-daily/apache-iceberg-demo/blob/main/ducldb_and_presto.png)
 Generally we confirmed, that DuckDB excels at single-node, local analytics on small to medium datasets, offering low latency and simplicity. Presto is suitable for distributed querying of large-scale datasets across multiple sources, with scalability but higher. 
 At the end, we can choose DuckDB for speed and Presto for scale and multi-source querying.
+
+## External resources used
+During the demo exercise I found some useful links, that I could 
