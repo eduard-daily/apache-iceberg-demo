@@ -56,4 +56,3 @@ spark.sql("""
 
 # writing to the new table with the new partition field
 df.writeTo("taxi_catalog.db.nyc_taxi_table").using("iceberg").partitionedBy("pickup_date").createOrReplace()
-
