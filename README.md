@@ -219,4 +219,12 @@ Generally we confirmed, that DuckDB excels at single-node, local analytics on sm
 At the end, we can choose DuckDB for speed and Presto for scale and multi-source querying.
 
 ## External resources used
-During the demo exercise I found some useful links, that I could 
+During the demo exercise I found some useful links, that helped me.
+1. https://www.kaggle.com/datasets/elemento/nyc-yellow-taxi-trip-data - dataset used in demo.
+2. https://medium.com/itversity/iceberg-catalogs-a-guide-for-data-engineers-a6190c7bf381 - good overview of Apache Iceberg catalogs.
+3. https://blog.det.life/building-a-local-data-lake-from-scratch-with-minio-iceberg-spark-starrocks-mage-and-docker-c12436e6ff9d - example of Iceberg implementation with Minio.
+4. https://medium.com/@wajahatullah.k/transforming-spark-dataframes-into-iceberg-tables-a-step-by-step-guide-6484e8b6b553 - PySpark and Iceberg reference.
+5. https://medium.com/@Shamimw/steps-to-connect-to-presto-with-iceberg-using-hive-5cbfb4c59b1f - iceberg and Presto configuration.
+6. https://habedi.medium.com/top-duckdb-cli-commands-that-you-should-know-7783af9c1fb4 - DuckDB CLI reference.
+7. https://duckdb.org/docs/extensions/iceberg.html - DuckDB Iceberg integration documentation.
+8. https://stackoverflow.com/questions/43999394/prometheus-how-to-monitor-other-docker-containers - Prometheus monitoring of local docker cluster.
