@@ -9,6 +9,7 @@ services:
       MINIO_ROOT_USER: admin
       MINIO_ROOT_PASSWORD: password
     volumes:
+      - ./test_data:/opt/data
       - minio_data:/data
     command: server /data --console-address ":9001"
 
