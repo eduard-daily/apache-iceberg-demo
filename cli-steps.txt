@@ -2,9 +2,13 @@ curl -L -o ~/Downloads/nyc-yellow-taxi-trip-data.zip  https://www.kaggle.com/api
 unzip ~/Downloads/nyc-yellow-taxi-trip-data.zip -d ~/Downloads/nyc-taxi-data/
 mv ~/Downloads/nyc-taxi-data/yellow_tripdata_2015-01.csv ~/Documents/iceberg-demo/test_data/
 
-docker exec minio mc alias set myminio http://127.0.0.1:9000 admin rootroot
+docker exec minio mc alias set myminio http://127.0.0.1:9000 admin password
 docker exec minio mc mb --with-lock myminio/nyc-taxi-data
 docker exec minio ls /opt/test_data/yellow_tripdata_2015-01.csv
 docker exec minio mc cp /opt/test_data/yellow_tripdata_2015-01.csv myminio/nyc-taxi-data/
 docker exec minio mc ls myminio/nyc-taxi-data/
 docker exec spark-master spark-submit --packages org.apache.iceberg:iceberg-spark-runtime-3.3_2.12:1.2.1,org.apache.hadoop:hadoop-aws:3.3.4 /opt/spark/work-dir/csv_to_ice.py
+
+docker exec duckdb python /opt/duckdb_check.py
+docker exec -it duckdb bash
+docker exec -it presto-coordinator presto-cli

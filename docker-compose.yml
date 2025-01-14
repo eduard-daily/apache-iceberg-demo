@@ -7,11 +7,28 @@ services:
       - "9001:9001"
     environment:
       MINIO_ROOT_USER: admin
-      MINIO_ROOT_PASSWORD: rootroot
+      MINIO_ROOT_PASSWORD: password
     volumes:
       - minio_data:/data
-      - ./test_data:/opt/test_data
     command: server /data --console-address ":9001"
+
+  mc:
+    depends_on:
+      - minio
+    image: minio/mc
+    container_name: mc
+    environment:
+      - AWS_ACCESS_KEY_ID=admin
+      - AWS_SECRET_ACCESS_KEY=password
+      - AWS_REGION=us-east-1
+    entrypoint: >
+      /bin/sh -c "
+      until (/usr/bin/mc config host add minio http://minio:9000 admin password) do echo '...waiting...' && sleep 1; done;
+      /usr/bin/mc rm -r --force minio/nyc-taxi-data;
+      /usr/bin/mc mb minio/nyc-taxi-data;
+      /usr/bin/mc anonymous set public minio/nyc-taxi-data;
+      tail -f /dev/null
+      "
 
   spark-master:
     image: bitnami/spark:latest
@@ -37,6 +54,60 @@ services:
     volumes:
       - ./scripts:/opt/spark/work-dir
 
+  duckdb:
+    image: python:3.9-slim
+    container_name: duckdb
+    entrypoint: >
+      sh -c "pip install duckdb && pip install numpy && pip install pandas && tail -f /dev/null"
+    volumes:
+      - ./scripts:/opt
+
+  presto-coordinator:
+    container_name: presto-coordinator
+    image: prestodb/presto:latest
+    ports:
+      - "8090:8080"
+    volumes:
+      - ./presto/etc:/opt/presto-server/etc
+    environment:
+      AWS_ACCESS_KEY: admin
+      AWS_SECRET_ACCESS_KEY: password
+
+  cadvisor:
+    image: gcr.io/cadvisor/cadvisor:latest
+    container_name: cadvisor
+    ports:
+      - "8099:8080"
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:rw
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+    restart: unless-stopped
+
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus:/etc/prometheus
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
+    restart: unless-stopped
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    volumes:
+      - grafana-data:/var/lib/grafana
+    restart: unless-stopped
 
 volumes:
   minio_data:
+  grafana-data:
