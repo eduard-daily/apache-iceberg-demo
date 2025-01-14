@@ -27,7 +27,7 @@ We are using here 2 Spark nodes: spark-master and spark-worker. In our case it's
 ```shell
 $ docker exec spark-master spark-submit --packages org.apache.iceberg:iceberg-spark-runtime-3.3_2.12:1.2.1,org.apache.hadoop:hadoop-aws:3.3.4 /opt/spark/work-dir/csv_to_ice.py
 ```
-##Query engines set up
+## Query engines set up
 Along with Minio and Spark containers, we have DuckDB(which is a normal lightweight python container) and Presto. 
 ### DuckDB setup
 To configure the DuckDB, we will run the DuckDB executable on the container: 
