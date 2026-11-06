@@ -50,7 +50,7 @@ D .timer on
 To verify the setup we can run a simple query:
 ```shell
 D SELECT count(*) as all_records
-  FROM iceberg_scan('s3://nyc-taxi-data/iceberg_warehouse/db/nyc_taxi_table');
+  FROM iceberg_scan('s3://nyc-taxi-data/iceberg_warehouse/db/nyc_taxi_table') ;
 ┌─────────────┐
 │ all_records │
 ├─────────────┤
